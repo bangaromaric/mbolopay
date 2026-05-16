@@ -1,0 +1,45 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+CLAUDE.md
+.claude
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Frontend (généré par esbuild — ne pas committer) ###
+src/main/resources/static/js/
+# node_modules synthétique généré par maven-antrun depuis les WebJars
+# (placé à la racine du projet car esbuild remonte depuis src/main/frontend/
+# pour résoudre les imports, il ne descendrait pas dans target/)
+/node_modules/
+/docs/charte-graphique.md
+/docs/stack-frontend.md
+/MboloPay.exe

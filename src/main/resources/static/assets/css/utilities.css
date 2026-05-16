@@ -1,0 +1,46 @@
+/*
+ * Classes utilitaires minimales — usage parcimonieux.
+ * Pour tout besoin récurrent : créer un composant Lit (Shadow DOM) plutôt qu'une utility.
+ *
+ * @author BANGA Romaric
+ */
+
+/* Accessibilité : masquer visuellement tout en restant lisible par les lecteurs d'écran */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Layout */
+.container { max-width: 1200px; margin-inline: auto; padding-inline: var(--space-4); }
+.stack     { display: flex; flex-direction: column; }
+.cluster   { display: flex; flex-wrap: wrap; }
+.flex      { display: flex; }
+.center    { display: flex; align-items: center; justify-content: center; }
+
+.gap-1 { gap: var(--space-1); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-5 { gap: var(--space-5); }
+.gap-6 { gap: var(--space-6); }
+
+/* Couleurs sémantiques pour le texte */
+.text-secondary { color: var(--color-text-secondary); }
+.text-danger    { color: var(--color-danger-500); }
+.text-success   { color: var(--color-success-500); }
+
+/* Montants tabulaires (à appliquer hors composant <mbolo-montant-fcfa>) */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Padding utilitaires (limités à ce qui sert vraiment) */
+.p-4 { padding: var(--space-4); }
+.p-5 { padding: var(--space-5); }

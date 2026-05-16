@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.0.2</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>ga.banga</groupId>
+    <artifactId>MboloPay</artifactId>
+    <version>0.0.6-SNAPSHOT</version>
+    <name>MboloPay</name>
+    <description>Mini Mobile Money - Demo Spring Modulith + Hexagonal Architecture</description>
+    <url/>
+    <licenses>
+        <license/>
+    </licenses>
+    <developers>
+        <developer/>
+    </developers>
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+    <properties>
+        <java.version>25</java.version>
+        <spring-modulith.version>2.0.2</spring-modulith.version>
+        <archunit-junit5.version>1.4.1</archunit-junit5.version>
+        <esbuild.version>0.28.0</esbuild.version>
+    </properties>
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.modulith</groupId>
+            <artifactId>spring-modulith-starter-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.modulith</groupId>
+            <artifactId>spring-modulith-starter-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5-api</artifactId>
+            <version>${archunit-junit5.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5-engine</artifactId>
+            <version>${archunit-junit5.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- H2 : base de données en mémoire pour le projet pédagogique -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- Actuator -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.modulith</groupId>
+            <artifactId>spring-modulith-actuator</artifactId>
+        </dependency>
+
+        <!-- Infrastructure -->
+
+        <dependency>
+            <groupId>org.springframework.modulith</groupId>
+            <artifactId>spring-modulith-junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- jMolecules -->
+
+        <dependency>
+            <groupId>org.jmolecules.integrations</groupId>
+            <artifactId>jmolecules-starter-ddd</artifactId>
+            <version>0.33.0</version>
+        </dependency>
+
+        <!-- jspecify pour la null-safety (déclaration explicite) -->
+        <dependency>
+            <groupId>org.jspecify</groupId>
+            <artifactId>jspecify</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.modulith</groupId>
+            <artifactId>spring-modulith-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- ============================================================ -->
+        <!-- Frontend : WebJars (SPA Lit 3 + Material Web 3, zéro npm)   -->
+        <!-- ============================================================ -->
+        <!--
+          webjars-locator-lite remplace webjars-locator-core depuis Spring Boot
+          3.4+ : suppression du scan classpath au démarrage (gain mesuré jusqu'à
+          50% sur le boot Petclinic). La version n'est pas gérée par le BOM
+          Spring Boot 4 — fixée explicitement.
+        -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator-lite</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>lit</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>material__web</artifactId>
+            <version>2.4.1</version>
+        </dependency>
+        <!--
+          Routing SPA : assuré par un mini routeur maison basé sur l'API native
+          URLPattern (Baseline 2025) dans src/main/frontend/router.ts.
+          L'ancien @vaadin/router (déprécié par Vaadin) a été retiré le 2026-05-14.
+          Conséquence : path-to-regexp, @vaadin/vaadin-usage-statistics et
+          @vaadin/vaadin-development-mode-detector ne sont plus tirés en transitif.
+
+          Note : @lit-labs/signals n'a pas encore de WebJar publié sur Maven Central
+          (au 2026-05). State partagé minimal de cette PR via CustomEvent global.
+          À ajouter quand le WebJar sera disponible.
+        -->
+    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.modulith</groupId>
+                <artifactId>spring-modulith-bom</artifactId>
+                <version>${spring-modulith.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.hibernate.orm</groupId>
+                <artifactId>hibernate-maven-plugin</artifactId>
+                <version>${hibernate.version}</version>
+                <executions>
+                    <execution>
+                        <id>enhance</id>
+                        <goals>
+                            <goal>enhance</goal>
+                        </goals>
+                        <configuration>
+                            <enableAssociationManagement>true</enableAssociationManagement>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- ============================================================ -->
+            <!-- Frontend : téléchargement du binaire esbuild + invocation    -->
+            <!-- L'URL et le chemin du binaire sont injectés par les profils  -->
+            <!-- OS-dépendants (cf. <profiles> plus bas).                     -->
+            <!-- ============================================================ -->
+            <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <version>1.13.0</version>
+                <executions>
+                    <execution>
+                        <id>telecharge-esbuild</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>${esbuild.url}</url>
+                            <unpack>true</unpack>
+                            <outputDirectory>${project.build.directory}/esbuild</outputDirectory>
+                            <skipCache>false</skipCache>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--
+              Étape 1 : extraire tous les WebJars npm vers target/webjars-extracted/.
+              Spring Boot inclut déjà ces JARs dans le runtime, ici on les expose au
+              build pour qu'esbuild puisse bundler leurs sources directement.
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>extract-webjars</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeGroupIds>org.webjars.npm</includeGroupIds>
+                            <includes>META-INF/resources/webjars/**</includes>
+                            <outputDirectory>${project.build.directory}/webjars-extracted</outputDirectory>
+                            <!-- Force la ré-extraction à chaque build : sinon
+                                 les fichiers marker dans target/dependency-maven-plugin-markers/
+                                 font sauter le goal et antrun trouve un dossier vide. -->
+                            <overWriteReleases>true</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--
+              Étape 2 : réorganiser les WebJars extraits en layout node_modules/
+              à la RACINE du projet (convention npm). esbuild remonte depuis
+              src/main/frontend/main.ts et trouve ce node_modules naturellement.
+              Le placer dans target/ ne marche pas : esbuild ne descend pas, il remonte.
+              Conversion `scope__name` → `@scope/name` (convention npm).
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>reorganize-webjars-to-node_modules</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <property name="extracted" value="${project.build.directory}/webjars-extracted/META-INF/resources/webjars"/>
+                                <property name="nm" value="${project.basedir}/node_modules"/>
+                                <delete dir="${nm}" quiet="true"/>
+                                <mkdir dir="${nm}"/>
+
+                                <!-- Lit family -->
+                                <copy todir="${nm}/lit"><fileset dir="${extracted}/lit/3.3.2"/></copy>
+                                <copy todir="${nm}/lit-element"><fileset dir="${extracted}/lit-element/4.2.2"/></copy>
+                                <copy todir="${nm}/lit-html"><fileset dir="${extracted}/lit-html/3.3.2"/></copy>
+                                <copy todir="${nm}/@lit/reactive-element"><fileset dir="${extracted}/lit__reactive-element/2.1.2"/></copy>
+                                <copy todir="${nm}/@lit-labs/ssr-dom-shim"><fileset dir="${extracted}/lit-labs__ssr-dom-shim/1.5.1"/></copy>
+
+                                <!-- Material Web -->
+                                <copy todir="${nm}/@material/web"><fileset dir="${extracted}/material__web/2.4.1"/></copy>
+
+                                <!-- Vaadin Router retiré : remplacé par mini routeur URLPattern dans router.ts -->
+
+                                <!-- Helpers -->
+                                <copy todir="${nm}/tslib"><fileset dir="${extracted}/tslib/2.8.1"/></copy>
+                                <copy todir="${nm}/@types/trusted-types"><fileset dir="${extracted}/types__trusted-types/2.0.7"/></copy>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--
+              Étape 3 : esbuild bundle complet.
+              esbuild résout les imports depuis le node_modules à la racine du
+              projet (remontée d'arborescence à partir de src/main/frontend/).
+              Aucune lib marquée "external" : tout (Lit, Material, Vaadin Router,
+              path-to-regexp, tslib) est ingéré dans main.js. esbuild convertit
+              aussi CJS vers ESM au passage (indispensable pour path-to-regexp 2.x).
+            -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.4.1</version>
+                <executions>
+                    <execution>
+                        <id>transpile-typescript</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${esbuild.binary}</executable>
+                            <arguments>
+                                <argument>--bundle</argument>
+                                <argument>--format=esm</argument>
+                                <argument>--target=es2022</argument>
+                                <argument>--sourcemap</argument>
+                                <!-- Extraction des commentaires de licence OSS dans main.js.LEGAL.txt :
+                                     bundle plus léger + un seul fichier à auditer pour la conformité. -->
+                                <argument>--legal-comments=external</argument>
+                                <argument>--outfile=${project.basedir}/src/main/resources/static/js/main.js</argument>
+                                <argument>${project.basedir}/src/main/frontend/main.ts</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- ================================================================== -->
+    <!-- Profils Maven auto-activés par OS/arch : injectent ${esbuild.url}  -->
+    <!-- et ${esbuild.binary} en fonction de la plateforme de build.        -->
+    <!-- ================================================================== -->
+    <profiles>
+        <profile>
+            <id>esbuild-linux-x64</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <name>linux</name>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <properties>
+                <esbuild.url>https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-${esbuild.version}.tgz</esbuild.url>
+                <esbuild.binary>${project.build.directory}/esbuild/package/bin/esbuild</esbuild.binary>
+            </properties>
+        </profile>
+        <profile>
+            <id>esbuild-linux-arm64</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <name>linux</name>
+                    <arch>aarch64</arch>
+                </os>
+            </activation>
+            <properties>
+                <esbuild.url>https://registry.npmjs.org/@esbuild/linux-arm64/-/linux-arm64-${esbuild.version}.tgz</esbuild.url>
+                <esbuild.binary>${project.build.directory}/esbuild/package/bin/esbuild</esbuild.binary>
+            </properties>
+        </profile>
+        <profile>
+            <id>esbuild-darwin-x64</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                    <arch>x86_64</arch>
+                </os>
+            </activation>
+            <properties>
+                <esbuild.url>https://registry.npmjs.org/@esbuild/darwin-x64/-/darwin-x64-${esbuild.version}.tgz</esbuild.url>
+                <esbuild.binary>${project.build.directory}/esbuild/package/bin/esbuild</esbuild.binary>
+            </properties>
+        </profile>
+        <profile>
+            <id>esbuild-darwin-arm64</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                    <arch>aarch64</arch>
+                </os>
+            </activation>
+            <properties>
+                <esbuild.url>https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-${esbuild.version}.tgz</esbuild.url>
+                <esbuild.binary>${project.build.directory}/esbuild/package/bin/esbuild</esbuild.binary>
+            </properties>
+        </profile>
+        <profile>
+            <id>esbuild-win32-x64</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <properties>
+                <esbuild.url>https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-${esbuild.version}.tgz</esbuild.url>
+                <esbuild.binary>${project.build.directory}/esbuild/package/esbuild.exe</esbuild.binary>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

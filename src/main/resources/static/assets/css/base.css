@@ -1,0 +1,83 @@
+/*
+ * Reset + déclarations globales MboloPay.
+ *
+ * @author BANGA Romaric
+ */
+
+/* Reset moderne minimal */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+html, body { min-height: 100dvh; }
+body {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background: var(--color-bg-canvas);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Shell layout (mbolo-app-shell est rendu en light DOM). */
+mbolo-app-shell {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100dvh;
+}
+mbolo-app-shell > .mbolo-shell__main,
+mbolo-app-shell > main {
+  flex: 1;
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+  box-sizing: border-box;
+}
+mbolo-app-shell > .mbolo-shell__header,
+mbolo-app-shell > header { flex-shrink: 0; }
+mbolo-app-shell > .mbolo-shell__nav,
+mbolo-app-shell > nav { flex-shrink: 0; }
+
+/* Inter (self-hosted, charte §4.1) */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/Inter-Variable.woff2") format("woff2-variations"),
+       url("/assets/fonts/Inter-Variable.woff2") format("woff2");
+}
+
+img, svg { display: block; max-width: 100%; }
+
+button { font: inherit; cursor: pointer; }
+
+a {
+  color: var(--brand-secondary-500);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+/* Focus visible accessible (charte §11.3) */
+:focus { outline: none; }
+:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--radius-sm);
+}
+
+/* Respect de prefers-reduced-motion (charte §12.2) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

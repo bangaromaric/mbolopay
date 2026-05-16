@@ -1,0 +1,199 @@
+/*
+ * Tokens MboloPay — extrait de docs/charte-graphique.md §15.1.
+ * Couleurs brutes → tokens de marque → tokens sémantiques.
+ * Les composants ne référencent QUE les tokens sémantiques.
+ *
+ * @author BANGA Romaric
+ */
+:root {
+  /* ============ COULEURS BRUTES ============ */
+  --neutral-0:   #FFFFFF;
+  --neutral-50:  #F8FAFB;
+  --neutral-100: #EEF1F4;
+  --neutral-200: #DDE3E8;
+  --neutral-400: #94A1AC;
+  --neutral-600: #5A6772;
+  --neutral-800: #1F2A33;
+  --neutral-900: #0B141B;
+
+  --brand-primary-50:  #E6F4EE;
+  --brand-primary-100: #C2E4D3;
+  --brand-primary-300: #5FB387;
+  --brand-primary-500: #0F7A4D;
+  --brand-primary-700: #0A5635;
+  --brand-primary-900: #063A23;
+
+  --brand-accent-100:  #FFF3CC;
+  --brand-accent-500:  #F5B800;
+  --brand-accent-700:  #A87E00;
+
+  --brand-secondary-100: #DCE9F8;
+  --brand-secondary-500: #1E5AAB;
+  --brand-secondary-700: #163E78;
+
+  --color-success-100: #D8EFDE;
+  --color-success-500: #137333;
+  --color-warning-100: #FCE9CC;
+  --color-warning-500: #B36A00;
+  --color-danger-100:  #F9D9D9;
+  --color-danger-500:  #C5221F;
+  --color-info-500:    #1E5AAB;
+
+  /* ============ SÉMANTIQUE (light) ============ */
+  --color-bg-canvas:     var(--neutral-50);
+  --color-bg-surface:    var(--neutral-0);
+  --color-bg-subtle:     var(--neutral-100);
+
+  --color-text-primary:  var(--neutral-800);
+  --color-text-secondary:var(--neutral-600);
+  --color-text-disabled: var(--neutral-400);
+  --color-text-inverse:  var(--neutral-0);
+  --color-text-brand:    var(--brand-primary-700);
+
+  --color-border-subtle: var(--neutral-200);
+  --color-border-strong: var(--neutral-400);
+  --color-border-focus:  var(--brand-primary-500);
+
+  --color-action-primary-bg:       var(--brand-primary-500);
+  --color-action-primary-bg-hover: var(--brand-primary-700);
+  --color-action-primary-fg:       var(--neutral-0);
+
+  --color-amount-positive: var(--color-success-500);
+  --color-amount-negative: var(--color-danger-500);
+  --color-amount-neutral:  var(--neutral-800);
+
+  /* ============ TYPO ============ */
+  --font-family-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Menlo, monospace;
+
+  --font-size-xs:   0.75rem;   /* 12px */
+  --font-size-sm:   0.875rem;  /* 14px */
+  --font-size-base: 1rem;      /* 16px */
+  --font-size-md:   1.125rem;  /* 18px */
+  --font-size-lg:   1.375rem;  /* 22px */
+  --font-size-xl:   1.75rem;   /* 28px */
+  --font-size-2xl:  2.25rem;   /* 36px */
+  --font-size-3xl:  3rem;      /* 48px */
+
+  --font-weight-regular:  400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+
+  /* ============ SPACING ============ */
+  --space-0:  0;
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.5rem;
+  --space-6:  2rem;
+  --space-8:  3rem;
+  --space-10: 4rem;
+
+  /* ============ RADIUS ============ */
+  --radius-none: 0;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
+
+  /* ============ SHADOWS ============ */
+  --shadow-xs:    0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --shadow-sm:    0 1px 3px 0 rgb(0 0 0 / 0.08);
+  --shadow-md:    0 4px 12px -2px rgb(0 0 0 / 0.10);
+  --shadow-lg:    0 12px 24px -8px rgb(0 0 0 / 0.16);
+  --shadow-focus: 0 0 0 3px rgb(15 122 77 / 0.30);
+
+  /* ============ MOTION ============ */
+  --duration-instant:  80ms;
+  --duration-quick:    160ms;
+  --duration-moderate: 240ms;
+  --duration-slow:     400ms;
+
+  --easing-standard:    cubic-bezier(0.2, 0, 0.2, 1);
+  --easing-emphasized:  cubic-bezier(0.2, 0, 0, 1);
+  --easing-decelerated: cubic-bezier(0, 0, 0.2, 1);
+
+  /* ============ BREAKPOINTS (référence) ============ */
+  --breakpoint-sm:  640px;
+  --breakpoint-md:  768px;
+  --breakpoint-lg:  1024px;
+  --breakpoint-xl:  1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* ============================================================ */
+/* MODE SOMBRE (charte §14)                                      */
+/*                                                                */
+/* Stratégie thème :                                              */
+/*   data-theme absent      → auto (suit prefers-color-scheme)    */
+/*   data-theme="light"     → force le mode clair                 */
+/*   data-theme="dark"      → force le mode sombre                */
+/*                                                                */
+/* Le mode sombre dérive sa propre palette (charte §14.1) — ce    */
+/* n'est pas une simple inversion. Les ombres deviennent des     */
+/* bordures (charte §14.3). Les couleurs sémantiques sont        */
+/* retunées (rouge négatif moins saturé pour AA sur fond sombre).*/
+/* ============================================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg-canvas:     #0B141B;
+    --color-bg-surface:    #142028;
+    --color-bg-subtle:     #1F2A33;
+
+    --color-text-primary:  #EEF1F4;
+    --color-text-secondary:#94A1AC;
+    --color-text-disabled: #5A6772;
+    --color-text-brand:    var(--brand-primary-300);
+
+    --color-border-subtle: #2A3640;
+    --color-border-strong: #5A6772;
+    --color-border-focus:  var(--brand-primary-300);
+
+    --color-action-primary-bg:       var(--brand-primary-300);
+    --color-action-primary-bg-hover: var(--brand-primary-500);
+    --color-action-primary-fg:       #0B141B;
+
+    --color-amount-negative: #F28B82;
+    --color-amount-neutral:  #EEF1F4;
+    --color-danger-500:      #F28B82;
+
+    --shadow-xs:    0 0 0 1px var(--color-border-subtle);
+    --shadow-sm:    0 0 0 1px var(--color-border-subtle);
+    --shadow-md:    0 0 0 1px var(--color-border-strong);
+    --shadow-lg:    0 0 0 1px var(--color-border-strong);
+    --shadow-focus: 0 0 0 3px rgb(95 179 135 / 0.40);
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-bg-canvas:     #0B141B;
+  --color-bg-surface:    #142028;
+  --color-bg-subtle:     #1F2A33;
+
+  --color-text-primary:  #EEF1F4;
+  --color-text-secondary:#94A1AC;
+  --color-text-disabled: #5A6772;
+  --color-text-brand:    var(--brand-primary-300);
+
+  --color-border-subtle: #2A3640;
+  --color-border-strong: #5A6772;
+  --color-border-focus:  var(--brand-primary-300);
+
+  --color-action-primary-bg:       var(--brand-primary-300);
+  --color-action-primary-bg-hover: var(--brand-primary-500);
+  --color-action-primary-fg:       #0B141B;
+
+  --color-amount-negative: #F28B82;
+  --color-amount-neutral:  #EEF1F4;
+  --color-danger-500:      #F28B82;
+
+  --shadow-xs:    0 0 0 1px var(--color-border-subtle);
+  --shadow-sm:    0 0 0 1px var(--color-border-subtle);
+  --shadow-md:    0 0 0 1px var(--color-border-strong);
+  --shadow-lg:    0 0 0 1px var(--color-border-strong);
+  --shadow-focus: 0 0 0 3px rgb(95 179 135 / 0.40);
+}

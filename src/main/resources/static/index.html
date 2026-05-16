@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr-GA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0F7A4D">
+  <title>MboloPay</title>
+
+  <!--
+    Anti-FOUC : applique le thème stocké AVANT le chargement des feuilles de
+    styles. Sans ce snippet, un utilisateur en mode sombre voit un flash
+    blanc au reload. La logique reste minimale (5 lignes) car le module
+    `lib/theme.ts` n'est pas encore chargé à ce stade.
+  -->
+  <script>
+    (function () {
+      try {
+        var mode = localStorage.getItem('mbolo.theme');
+        if (mode === 'dark' || mode === 'light') {
+          document.documentElement.setAttribute('data-theme', mode);
+        }
+      } catch (_) { /* localStorage indisponible : tant pis */ }
+    })();
+  </script>
+
+  <link rel="preload" as="font" type="font/woff2"
+        href="/assets/fonts/Inter-Variable.woff2" crossorigin>
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/material-theme.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/utilities.css">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+
+  <!--
+    main.js est un bundle ESM autonome produit par esbuild au build Maven :
+    il contient déjà Lit, Material Web, le routeur URLPattern et toutes les
+    dépendances transitives. Aucun import map nécessaire.
+  -->
+  <script type="module" src="/js/main.js"></script>
+</head>
+<body>
+  <mbolo-app-shell></mbolo-app-shell>
+</body>
+</html>
