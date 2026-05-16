@@ -70,7 +70,22 @@ try {
   }
   Write-Host "Compte gcloud actif : $gcloudUser"
 
-  Write-Host "***** 2bis. Vérification du credential helper Docker (docker-credential-gcr)... *****" -ForegroundColor Yellow
+  Write-Host "***** 2bis. Vérification des Application Default Credentials (ADC)... *****" -ForegroundColor Yellow
+  # docker-credential-gcr utilise les ADC, PAS les credentials de 'gcloud auth login'.
+  # Sans ADC, le helper échoue avec 'invalid_grant Bad Request' et le push Maven plante
+  # après les ~5-10 min de build natif — on coupe court ici en 1 seconde.
+  $adcPath = "$env:APPDATA\gcloud\application_default_credentials.json"
+  if (-not (Test-Path $adcPath)) {
+    throw "Application Default Credentials non configurées. Lance 'gcloud auth application-default login' d'abord (ouvre un navigateur, à faire une fois)."
+  }
+  # Test fonctionnel : un token doit pouvoir être obtenu via ADC
+  $adcToken = gcloud auth application-default print-access-token 2>$null
+  if ([string]::IsNullOrWhiteSpace($adcToken)) {
+    throw "ADC présentes mais le token ne peut pas être obtenu (probablement périmées). Relance 'gcloud auth application-default login'."
+  }
+  Write-Host "ADC OK : $adcPath"
+
+  Write-Host "***** 2ter. Vérification du credential helper Docker (docker-credential-gcr)... *****" -ForegroundColor Yellow
   $helper = Get-Command docker-credential-gcr -ErrorAction SilentlyContinue
   if (-not $helper) {
     throw "docker-credential-gcr introuvable dans le PATH. Voir docs/deploy-cloud-run.md (section 'Installation de docker-credential-gcr') pour l'installer."

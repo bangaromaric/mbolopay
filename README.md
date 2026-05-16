@@ -2,7 +2,7 @@
 
 > Mini mobile money éducatif. Vitrine **DDD + Architecture Hexagonale + Spring Modulith** sur un cas métier réel (Gabon).
 
-![Java](https://img.shields.io/badge/Java-21-007396?logo=openjdk&logoColor=white)
+![Java](https://img.shields.io/badge/Java-25-007396?logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.2-6DB33F?logo=springboot&logoColor=white)
 ![Spring Modulith](https://img.shields.io/badge/Spring%20Modulith-2.0.2-6DB33F)
 ![Lit](https://img.shields.io/badge/Lit-3.3.2-324FFF?logo=lit&logoColor=white)
@@ -69,7 +69,7 @@ Une fois l'application lancée, la page **`/architecture`** dans l'app expose le
 
 ## Pré-requis
 
-- **Java 21+** (recommandé : [Eclipse Temurin](https://adoptium.net/)). Vérifier avec `java -version`.
+- **Java 25+** (recommandé : [Liberica NIK 25](https://bell-sw.com/pages/downloads/native-image-kit/) si tu veux compiler en natif, sinon [Eclipse Temurin 25](https://adoptium.net/)). Vérifier avec `java -version`.
 - **Git** pour cloner le dépôt.
 
 **Aucune autre installation** :
@@ -90,7 +90,7 @@ Parcours complet, de `git clone` à l'application qui tourne :
 git clone https://github.com/bangaromaric/MboloPay.git
 cd MboloPay
 
-# 2. Vérifier la version Java (doit afficher 21 ou plus)
+# 2. Vérifier la version Java (doit afficher 25 ou plus)
 java -version
 
 # 3. Lancer l'application
@@ -292,7 +292,7 @@ Toutes les exceptions métier héritent de [`ExceptionDomaine`](src/main/java/ga
 
 | Composant | Version | Rôle |
 |---|---|---|
-| Java | 21 | Toolchain |
+| Java | 25 | Toolchain (baseline Spring Boot 4) |
 | Spring Boot | 4.0.2 | Framework |
 | Spring Modulith | 2.0.2 | Modules + événements |
 | jMolecules | 0.33.0 | Annotations DDD (`@AggregateRoot`, `@ValueObject`, `@Identity`) |
@@ -414,7 +414,7 @@ Trois sections didactiques accessibles à tout moment :
 | `./mvnw test` | Lancer tous les tests |
 | `./mvnw test -Dtest=ClassName` | Lancer une classe de test précise |
 | `./mvnw test -Dtest=HexagonalArchitectureTest,ModularityTests` | Vérifier l'architecture après changement structurel |
-| `./mvnw native:compile -Pnative` | Image native GraalVM (nécessite GraalVM 21, cf. section *Image native*) |
+| `./mvnw native:compile -Pnative` | Image native GraalVM (nécessite Liberica NIK 25, cf. section *Image native*) |
 | `./mvnw clean` | Nettoyer les artefacts de build |
 
 ---

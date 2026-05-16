@@ -29,10 +29,18 @@ Get-ChildItem Env: | Where-Object Name -like "GCP_MBOLOPAY_*"
 | Outil | Vérification |
 |---|---|
 | Docker Desktop | `docker info` |
-| gcloud CLI | `gcloud --version` puis `gcloud auth login` |
+| gcloud CLI | `gcloud --version` |
+| gcloud auth (CLI) | `gcloud auth login` |
+| gcloud ADC | `gcloud auth application-default login` (⚠️ **distinct du précédent**, requis pour `docker-credential-gcr`) |
 | Liberica NIK 25 | `native-image --version` (voir [`native-image-build.md`](native-image-build.md)) |
 | VS Build Tools (MSVC) | déjà installé pour la compilation native |
 | Git + GitHub auth | `gh auth login` (ou PAT via Git Credential Manager) |
+
+> ⚠️ **Piège classique** : `gcloud auth login` ≠ `gcloud auth application-default login`.
+> - Le 1er authentifie la CLI `gcloud` (commandes interactives).
+> - Le 2ème écrit `%APPDATA%\gcloud\application_default_credentials.json`, utilisé par les SDKs/outils comme `docker-credential-gcr`.
+>
+> Sans ADC, le helper échoue avec `auth: "invalid_grant" "Bad Request"` lors du push Maven, **après les 5-10 min de build natif**. Le script `cloudRunDeploy.ps1` vérifie maintenant les ADC en 1 seconde au début pour couper court.
 
 ### 3. Installation de `docker-credential-gcr` (CRITIQUE)
 
@@ -172,6 +180,8 @@ curl https://<SERVICE_URL>/actuator
 | Erreur | Cause | Fix |
 |---|---|---|
 | `Cannot run program "docker-credential-gcloud"` | `docker-credential-gcr` non installé/non dans PATH | Étape 3 ci-dessus |
+| `docker-credential-gcr/helper: ... auth: "invalid_grant" "Bad Request"` | ADC absentes ou périmées | `gcloud auth application-default login` |
+| `'username' must not be null` (côté Maven build-image) | Conséquence du `invalid_grant` ci-dessus | Idem : reconfigurer ADC |
 | `No 'io.buildpacks.builder.metadata' label found` | Cache Docker corrompu sur image Paketo | `docker system prune --all --force` puis relancer |
 | `release version 25 not supported` (pendant `process-aot`) | `JAVA_HOME` pointe sur une JDK < 25 | Voir [`native-image-build.md`](native-image-build.md) — corriger `JAVA_HOME` vers Liberica NIK 25 |
 | `Authentication failed for 'https://github.com/...'` | GitHub n'accepte plus l'auth par mot de passe | `gh auth login` (ou Personal Access Token via Git Credential Manager) |
