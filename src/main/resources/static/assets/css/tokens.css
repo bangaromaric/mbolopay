@@ -75,6 +75,9 @@
   --font-size-2xl:  2.25rem;   /* 36px */
   --font-size-3xl:  3rem;      /* 48px */
 
+  /* Tailles fluides — s'adaptent au viewport (mobile-first, charte §15.1). */
+  --font-size-hero: clamp(1.625rem, 4vw + 0.75rem, 2.25rem); /* 26px → 36px */
+
   --font-weight-regular:  400;
   --font-weight-medium:   500;
   --font-weight-semibold: 600;
@@ -117,6 +120,7 @@
   --easing-decelerated: cubic-bezier(0, 0, 0.2, 1);
 
   /* ============ BREAKPOINTS (référence) ============ */
+  --breakpoint-xs:  380px;
   --breakpoint-sm:  640px;
   --breakpoint-md:  768px;
   --breakpoint-lg:  1024px;

@@ -135,7 +135,7 @@ export class PageAccueil extends LitElement {
       margin: 0 0 var(--space-5) 0;
     }
     .hero h1 {
-      font-size: var(--font-size-2xl);
+      font-size: var(--font-size-hero);
       color: var(--color-text-primary);
       margin: 0 0 var(--space-2) 0;
       font-weight: var(--font-weight-bold);
@@ -163,14 +163,21 @@ export class PageAccueil extends LitElement {
     }
     .actions {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr;
       gap: var(--space-3);
+    }
+    @media (min-width: 480px) {
+      .actions {
+        /* minmax(0, 1fr) empêche le contenu interne (chip monospace) d'élargir la cellule. */
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
     }
     .action-cell {
       display: flex;
       flex-direction: column;
       align-items: stretch;
       gap: var(--space-1);
+      min-width: 0; /* indispensable pour que les enfants ellipsis respectent la largeur */
     }
     .helper {
       font-size: var(--font-size-xs);
@@ -179,8 +186,21 @@ export class PageAccueil extends LitElement {
       display: block;
       width: 100%;
     }
+    /* Helper masqué visuellement mais lu par les AT (charte §11). */
+    .helper.sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
     .action-cell mbolo-port-indicator {
       align-self: center;
+      max-width: 100%;
     }
     .activite {
       background: var(--color-bg-surface);
@@ -247,6 +267,10 @@ export class PageAccueil extends LitElement {
         <div class="actions">
           ${ACTIONS.map((action) => {
             const active = this.actionEstActive(action);
+            // "Connectez-vous" est déjà communiqué par la balance-card en empty-state :
+            // on garde le helper pour les AT mais on le masque visuellement (évite la
+            // répétition x3 sous chaque action). "Bientôt" reste visible.
+            const helperVisuellementMasque = !active && action.cableable;
             return html`
               <div class="action-cell">
                 <mbolo-button
@@ -259,7 +283,10 @@ export class PageAccueil extends LitElement {
                   <mbolo-icon name=${action.icone} .size=${24}></mbolo-icon>
                   ${action.libelle}
                 </mbolo-button>
-                <span id="aide-${action.id}" class="helper">
+                <span
+                  id="aide-${action.id}"
+                  class="helper ${helperVisuellementMasque ? 'sr-only' : ''}"
+                >
                   ${active ? ' ' : action.cableable ? 'Connectez-vous' : 'Bientôt'}
                 </span>
                 ${this.pedagogique

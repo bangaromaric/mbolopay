@@ -89,6 +89,7 @@ export class MboloTopAppBar extends LitElement {
       align-items: center;
       gap: var(--space-2);
       justify-self: end;
+      min-width: 0;
     }
     .badge-bc {
       display: inline-flex;
@@ -101,6 +102,32 @@ export class MboloTopAppBar extends LitElement {
       font-size: var(--font-size-xs);
       font-weight: var(--font-weight-medium);
       text-decoration: none;
+      flex-shrink: 0;
+      max-width: 100%;
+    }
+    .badge-bc .badge-bc__label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    /* Sur mobile étroit (< 380px), on masque le texte du badge pour éviter
+       qu'il déborde sur le titre. L'icône cpu reste visible et le title HTML
+       préserve l'information complète au survol/long-press. */
+    @media (max-width: 379px) {
+      .badge-bc .badge-bc__label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      .badge-bc {
+        padding-inline: var(--space-1);
+      }
     }
     a.badge-bc:hover { filter: brightness(0.95); }
     a.badge-bc:focus-visible {
@@ -135,14 +162,14 @@ export class MboloTopAppBar extends LitElement {
           title=${titre}
         >
           <mbolo-icon name="cpu" .size=${14}></mbolo-icon>
-          ${bc}
+          <span class="badge-bc__label">${bc}</span>
         </a>
       `;
     }
     return html`
-      <span class="badge-bc" title="Bounded context (mode pédagogique)">
+      <span class="badge-bc" title=${`Bounded context « ${bc} » (mode pédagogique)`}>
         <mbolo-icon name="cpu" .size=${14}></mbolo-icon>
-        ${bc}
+        <span class="badge-bc__label">${bc}</span>
       </span>
     `;
   }

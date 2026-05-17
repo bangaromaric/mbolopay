@@ -37,6 +37,9 @@ mbolo-app-shell > main {
   max-width: 1200px;
   margin-inline: auto;
   padding-inline: var(--space-4);
+  /* Clearance pour le FAB pédagogique (fixed, 56px + 16px gap au-dessus de la
+     bottom-nav sticky de 64px). Le safe-area-inset-bottom protège les notch iOS. */
+  padding-bottom: calc(var(--space-5) + env(safe-area-inset-bottom, 0));
   box-sizing: border-box;
 }
 mbolo-app-shell > .mbolo-shell__header,

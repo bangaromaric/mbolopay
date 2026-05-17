@@ -40,6 +40,10 @@ export class MboloPortIndicator extends LitElement {
       font-family: var(--font-family-mono);
       font-size: var(--font-size-xs);
       border: 1px dashed var(--color-border-strong);
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      box-sizing: border-box;
     }
     a {
       all: unset;
@@ -48,6 +52,20 @@ export class MboloPortIndicator extends LitElement {
       gap: var(--space-1);
       cursor: pointer;
       color: inherit;
+      min-width: 0;
+      max-width: 100%;
+    }
+    /* Le wrapper du contenu (span ou a) doit pouvoir tronquer le nom du port
+       quand la cellule parente est étroite (mobile < 480px). */
+    :host > span,
+    :host > a {
+      overflow: hidden;
+    }
+    .port-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
     }
     a:hover {
       color: var(--color-text-brand);
@@ -100,11 +118,13 @@ export class MboloPortIndicator extends LitElement {
     const contenu = html`
       ${this.renduPastille()}
       <mbolo-icon name="cpu" .size=${12}></mbolo-icon>
-      <span>${this.port}</span>
+      <span class="port-name">${this.port}</span>
       ${this.source
         ? html`<mbolo-icon class="ext" name="external-link" .size=${10}></mbolo-icon>`
         : nothing}
     `;
+    // Le `title` natif permet aux utilisateurs de voir le nom complet
+    // au survol/long-press quand l'ellipsis est appliquée (mobile étroit).
     if (this.source) {
       return html`
         <a
@@ -117,6 +137,6 @@ export class MboloPortIndicator extends LitElement {
         </a>
       `;
     }
-    return html`<span title="Port appelé (mode pédagogique)">${contenu}</span>`;
+    return html`<span title=${`Port appelé : ${this.port}`}>${contenu}</span>`;
   }
 }
